@@ -8,6 +8,6 @@ public class SafetyCell extends Cells{
     @Override
     void collide(PlayStone stone) {
        listStones.add(stone);
-       return;
+
     }
 }
