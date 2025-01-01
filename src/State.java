@@ -5,6 +5,12 @@ public class State {
     ArrayList<Player> players;
     boolean isFinished = false;
 
+    public State(Cells[][] grid, ArrayList<Player> players){
+        this.grid = grid;
+        this.players = players;
+        this.isFinished = false;
+    }
+
     public State(Cells[][] grid, ArrayList<Player> players, boolean isFinished) {
         this.grid = grid;
         this.players = players;

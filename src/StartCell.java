@@ -1,5 +1,8 @@
 public class StartCell extends  Cells{
-    public StartCell(char name) {
-        super(name);
+
+    private final PlayerColor color;
+    public StartCell(PlayerColor color) {
+        super('#');
+        this.color = color;
     }
 }
