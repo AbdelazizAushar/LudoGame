@@ -73,9 +73,9 @@ public class ConsoleColors {
     public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
 
     public static String getColor(PlayerColor color) {
-        if(color == PlayerColor.BLUE) return BLUE;
-        else if(color == PlayerColor.RED) return RED;
-        else if(color == PlayerColor.GREEN) return GREEN;
+        if (color == PlayerColor.BLUE) return BLUE;
+        else if (color == PlayerColor.RED) return RED;
+        else if (color == PlayerColor.GREEN) return GREEN;
         else return YELLOW;
     }
 }

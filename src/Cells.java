@@ -2,9 +2,9 @@ import java.util.List;
 
 public abstract class Cells {
     char name;
-    List<PlayStone>listStones;
+    List<PlayStone> listStones;
 
-    public Cells(char name){
+    public Cells(char name) {
         this.name = name;
     }
 
@@ -15,10 +15,10 @@ public abstract class Cells {
 
     @Override
     public String toString() {
-        return name+" ";
+        return name + " ";
     }
 
-    abstract void collide(PlayStone stone) ;
+    abstract public Cells copy();
 
-
+    abstract void collide(PlayStone stone);
 }
