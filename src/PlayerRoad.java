@@ -10,7 +10,7 @@ public class PlayerRoad {
     }
 
     private void setStartCell() {
-        playerRoad[0] = new StartCell(playerRoadColor);
+//        playerRoad[0] = new StartCell(playerRoadColor);
     }
 
     private void setEmptyCells() {

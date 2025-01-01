@@ -15,8 +15,6 @@ public class Game {
         Cells[][] initialGrid = new Cells[playersNumber][roadLength];
         for(int i = 0; i < playersNumber ; i++){
             Player currPlayer = players.get(i);
-            initialGrid[i][0] = new StartCell(currPlayer.playerColor);
-            initialGrid[i][1] =
         }
         return initialGrid;
     }

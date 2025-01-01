@@ -1,8 +1,15 @@
+import java.util.List;
+
 public class StartCell extends  Cells{
 
-    private final PlayerColor color;
-    public StartCell(PlayerColor color) {
-        super('#');
-        this.color = color;
+    public StartCell(char name, List<PlayStone>listStones) {
+        super(name,listStones);
+    }
+
+
+    @Override
+    void collide(PlayStone stone) {
+        listStones.add(stone);
+
     }
 }
