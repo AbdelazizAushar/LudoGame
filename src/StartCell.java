@@ -8,9 +8,7 @@ public class StartCell extends  Cells{
 
     @Override
     void collide(PlayStone stone) {
-        if(!listStones.isEmpty()&&stone.color!=listStones.get(0).color){
-            listStones.forEach(stonein->stonein.i=-1);
-        }
         listStones.add(stone);
+
     }
 }
