@@ -1,6 +1,12 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("This is the project for Ludo Game!");
-        System.out.println("Class Structure + Constructor Done!");
+        Game game = new Game(2);
+        Cells[][] grid = game.states.get(0).grid;
+        for (Cells[] row: grid){
+            for (Cells cell: row) {
+                System.out.print(cell);
+            }
+            System.out.println();
+        }
     }
 }

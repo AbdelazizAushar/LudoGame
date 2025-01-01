@@ -1,6 +1,11 @@
 import java.util.List;
 
 public class FreeCell extends Cells {
+
+    public FreeCell() {
+        super('-');
+    }
+
     public FreeCell(char name, List<PlayStone> listStones) {
         super(name, listStones);
 
