@@ -15,7 +15,7 @@ public class Game {
 
     private Cells[][] getInitialGrid(int playersNumber) {
         Cells[][] initialGrid = new Cells[playersNumber][PlayerRoad.roadLength];
-        for(int i = 0; i < playersNumber ; i++){
+        for (int i = 0; i < playersNumber; i++) {
             Player currPlayer = players.get(i);
             PlayerRoad currPlayerRoad = new PlayerRoad(currPlayer.playerColor);
             initialGrid[i] = currPlayerRoad.getPlayerRoad();
@@ -26,7 +26,7 @@ public class Game {
     private ArrayList<Player> getInitialPlayers(int playersNumber) {
         ArrayList<Player> players = new ArrayList<>();
         PlayerColor[] playerColors = PlayerColor.values();
-        for(int i = 0; i < playersNumber ; i++){
+        for (int i = 0; i < playersNumber; i++) {
             players.add(new Player(playerColors[i]));
         }
         return players;
