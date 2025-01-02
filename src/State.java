@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class State {
@@ -54,5 +55,39 @@ public class State {
         }
 
         return intersection;
+    }
+    Map<String, Integer> intersectionWithStep(PlayStone stone, int step) {
+        Map<String, Integer> intersection = new HashMap<>();
+
+        for (PlayerColor color : PlayerColor.values()) {
+            if (stone.color == color)continue;
+            int colorIndex = color.getStartingPosition();
+            int offset = stone.color.getStartingPosition() - colorIndex;
+
+            int notKnownColorIndex = (stone.i+step + 12 * (offset < 0 ? (offset + 4) : offset))%48;
+            intersection.put(color.name(), notKnownColorIndex);
+        }
+
+        return intersection;
+    }
+
+    boolean BlockFounded(int diceNumber, PlayStone stone){
+        List<Integer> cellsPosition= new ArrayList<>();
+
+        for(int i=stone.i+1; i<=diceNumber+stone.i;i++){
+            Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
+
+            cellsPosition.add(positions.get(stone.color.name()));
+
+
+        }
+        for (Integer listPosition: cellsPosition){
+            for(int i=0;i<4;i++){
+                if(grid[listPosition][i].listStones.size()>=2){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
