@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 public class State {
@@ -14,5 +15,11 @@ public class State {
     public State(Cells[][] grid, ArrayList<Player> players, boolean isFinished) {
         this.grid = grid;
         this.players = players;
+    }
+
+    @Override
+    public String toString() {
+
+        return " ";
     }
 }
