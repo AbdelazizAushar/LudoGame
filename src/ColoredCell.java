@@ -4,7 +4,7 @@ public abstract class ColoredCell extends Cells {
 
     private PlayerColor color;
 
-    public ColoredCell(char name){
+    public ColoredCell(char name) {
         super(name);
     }
 
