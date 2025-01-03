@@ -46,7 +46,7 @@ public class Player {
             if (stone.isAWin) continue;
             if (stone.isOut && dice != 6) continue;
             if (state.BlockFounded(dice, stone)) continue;
-            if (getWinningTileIndex() != stone.i + dice) continue;
+            if (getWinningTileIndex() - stone.i <= 6 && getWinningTileIndex() != stone.i + dice) continue;
             movableStones.add(stone);
         }
         return movableStones;
