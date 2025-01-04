@@ -25,4 +25,15 @@ public class PlayStone {
         this.isOut = playStone.isOut;
         this.isAWin = playStone.isAWin;
     }
+
+    public String getStoneOnBoard(int number) {
+        char result = 'g';
+        switch (color.ordinal()){
+            case 1 -> result = 'y';
+            case 2 -> result = 'r';
+            case 3 -> result = 'b';
+        }
+        return String.valueOf(number) + String.valueOf(result);
+    }
+
 }

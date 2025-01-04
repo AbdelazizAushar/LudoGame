@@ -1,12 +1,14 @@
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game(2);
-        Cells[][] grid = game.states.get(0).grid;
-        for (Cells[] row : grid) {
-            for (Cells cell : row) {
-                System.out.print(cell);
-            }
-            System.out.println();
-        }
+        ArrayList<Player> players = new ArrayList<>();
+        Player blue = new Player(PlayerColor.BLUE);
+        PlayStone blueStone = blue.stones.get(2);
+        blueStone.i = 10;
+        blueStone.isOut = false;
+        players.add(blue);
+        LudoBoard board = new LudoBoard(players);
+        System.out.println(board);
     }
 }

@@ -1,11 +1,11 @@
 import java.util.Map;
 
-public class PlayerRoad {
+public class PlayerRoadMaker {
     static final int roadLength = 52;
     private final PlayerColor playerRoadColor;
     private Cells[] playerRoad;
 
-    public PlayerRoad(PlayerColor playerRoadColor) {
+    public PlayerRoadMaker(PlayerColor playerRoadColor) {
         this.playerRoadColor = playerRoadColor;
         playerRoad = new Cells[roadLength];
         initializePlayerRoad();

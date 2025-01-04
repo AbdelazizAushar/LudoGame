@@ -1,4 +1,3 @@
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class Game {
@@ -14,10 +13,10 @@ public class Game {
     }
 
     private Cells[][] getInitialGrid(int playersNumber) {
-        Cells[][] initialGrid = new Cells[playersNumber][PlayerRoad.roadLength];
+        Cells[][] initialGrid = new Cells[playersNumber][PlayerRoadMaker.roadLength];
         for (int i = 0; i < playersNumber; i++) {
             Player currPlayer = players.get(i);
-            PlayerRoad currPlayerRoad = new PlayerRoad(currPlayer.playerColor);
+            PlayerRoadMaker currPlayerRoad = new PlayerRoadMaker(currPlayer.playerColor);
             initialGrid[i] = currPlayerRoad.getPlayerRoad();
         }
         return initialGrid;

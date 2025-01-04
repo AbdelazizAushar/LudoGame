@@ -78,4 +78,36 @@ public class ConsoleColors {
         else if (color == PlayerColor.GREEN) return GREEN;
         else return YELLOW;
     }
+
+    public static String getDesignedCell(String cell) {
+        if(cell.equals("  ")) return ConsoleColors.BLACK_BACKGROUND + "   " + ConsoleColors.RESET;
+        else if(cell.equals("--")) return ConsoleColors.WHITE_BACKGROUND_BRIGHT + "   " + ConsoleColors.RESET;
+        else if(cell.equals("..")) return ConsoleColors.WHITE_BACKGROUND + "   " + ConsoleColors.RESET;
+        else if(cell.equals("++")) return ConsoleColors.BLACK_BACKGROUND_BRIGHT + "   " + ConsoleColors.RESET;
+        else if(cell.equals("#y")) return ConsoleColors.YELLOW_BOLD + " * " + ConsoleColors.RESET;
+        else if(cell.equals("#g")) return ConsoleColors.GREEN_BOLD + " * " + ConsoleColors.RESET;
+        else if(cell.equals("#r")) return ConsoleColors.RED_BOLD + " * " + ConsoleColors.RESET;
+        else if(cell.equals("#b")) return ConsoleColors.BLUE_BOLD + " * " + ConsoleColors.RESET;
+        else if(cell.equals("BB")) return ConsoleColors.BLUE_BACKGROUND + "   " + ConsoleColors.RESET;
+        else if(cell.equals("YY")) return ConsoleColors.YELLOW_BACKGROUND + "   " + ConsoleColors.RESET;
+        else if(cell.equals("GG")) return ConsoleColors.GREEN_BACKGROUND + "   " + ConsoleColors.RESET;
+        else if(cell.equals("RR")) return ConsoleColors.RED_BACKGROUND + "   " + ConsoleColors.RESET;
+        else if(cell.equals("1b")) return ConsoleColors.BLUE + " 1 " + ConsoleColors.RESET;
+        else if(cell.equals("2b")) return ConsoleColors.BLUE + " 2 " + ConsoleColors.RESET;
+        else if(cell.equals("3b")) return ConsoleColors.BLUE + " 3 " + ConsoleColors.RESET;
+        else if(cell.equals("4b")) return ConsoleColors.BLUE + " 4 " + ConsoleColors.RESET;
+        else if(cell.equals("1y")) return ConsoleColors.YELLOW + " 1 " + ConsoleColors.RESET;
+        else if(cell.equals("2y")) return ConsoleColors.YELLOW + " 2 " + ConsoleColors.RESET;
+        else if(cell.equals("3y")) return ConsoleColors.YELLOW + " 3 " + ConsoleColors.RESET;
+        else if(cell.equals("4y")) return ConsoleColors.YELLOW + " 4 " + ConsoleColors.RESET;
+        else if(cell.equals("1r")) return ConsoleColors.RED + " 1 " + ConsoleColors.RESET;
+        else if(cell.equals("2r")) return ConsoleColors.RED + " 2 " + ConsoleColors.RESET;
+        else if(cell.equals("3r")) return ConsoleColors.RED + " 3 " + ConsoleColors.RESET;
+        else if(cell.equals("4r")) return ConsoleColors.RED + " 4 " + ConsoleColors.RESET;
+        else if(cell.equals("1g")) return ConsoleColors.GREEN + " 1 " + ConsoleColors.RESET;
+        else if(cell.equals("2g")) return ConsoleColors.GREEN + " 2 " + ConsoleColors.RESET;
+        else if(cell.equals("3g")) return ConsoleColors.GREEN + " 3 " + ConsoleColors.RESET;
+        else if(cell.equals("4g")) return ConsoleColors.GREEN + " 4 " + ConsoleColors.RESET;
+        else return cell;
+    }
 }
