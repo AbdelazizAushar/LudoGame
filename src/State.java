@@ -71,25 +71,50 @@ public class State {
         return intersection;
     }
 
-    boolean BlockFounded(int diceNumber, PlayStone stone) {
+    int BlockFounded(int diceNumber, PlayStone stone) {
         List<Integer> cellsPosition = new ArrayList<>();
+        int step = 0;
+
         for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
             Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
             cellsPosition.add(positions.get(stone.color.name()));
         }
-        for (Integer listPosition : cellsPosition) {
-            for (int i = 0; i < 4; i++) {
-                if (grid[listPosition][i].listStones.size() >= 2) {
-                    return true;
+
+        for (int i = 0; i < cellsPosition.size(); i += 3) {
+            boolean groupValid = true;
+            for (int j = i; j < i + 3 && j < cellsPosition.size(); j++) {
+                for (int k = 0; k < 4; k++) {
+                    if (grid[j][k].listStones.size() >= 2) {
+                        groupValid = false;
+                        break;
+                    }
                 }
+
+            }
+            if (groupValid) {
+                step++;
             }
         }
-        return false;
+        return step;
+    }
+        @Override
+        public String toString () {
+
+            return " ";
+        }
     }
 
-    @Override
-    public String toString() {
 
-        return " ";
-    }
-}
+//    List<Integer> cellsPosition = new ArrayList<>();
+//        for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
+//                Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
+//        cellsPosition.add(positions.get(stone.color.name()));
+//        }
+//        for (Integer listPosition : cellsPosition) {
+//        for (int i = 0; i < 4; i++) {
+//        if (grid[listPosition][i].listStones.size() >= 2) {
+//        return true;
+//        }
+//        }
+//        }
+//        return false;
