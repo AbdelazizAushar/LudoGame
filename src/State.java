@@ -74,12 +74,10 @@ public class State {
     int BlockFounded(int diceNumber, PlayStone stone) {
         List<Integer> cellsPosition = new ArrayList<>();
         int step = 0;
-
         for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
             Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
             cellsPosition.add(positions.get(stone.color.name()));
         }
-
         for (int i = 0; i < cellsPosition.size(); i += 3) {
             boolean groupValid = true;
             for (int j = i; j < i + 3 && j < cellsPosition.size(); j++) {
@@ -89,7 +87,6 @@ public class State {
                         break;
                     }
                 }
-
             }
             if (groupValid) {
                 step++;
@@ -97,12 +94,13 @@ public class State {
         }
         return step;
     }
-        @Override
-        public String toString () {
 
-            return " ";
-        }
+    @Override
+    public String toString() {
+
+        return " ";
     }
+}
 
 
 //    List<Integer> cellsPosition = new ArrayList<>();
