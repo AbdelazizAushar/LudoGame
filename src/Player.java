@@ -45,8 +45,8 @@ public class Player {
             if (stone.isAWin) continue;
             if (stone.isOut && dice != 6) continue;
             if (getWinningTileIndex() - stone.i <= 6 && getWinningTileIndex() != stone.i + dice) continue;
-            if (state.BlockFounded(dice, stone) != 0) movableStones.put(stone, state.BlockFounded(dice, stone));
-            else movableStones.put(stone, dice);
+            if (state.BlockFounded(dice, stone) == 0) continue;
+            movableStones.put(stone, state.BlockFounded(dice, stone));
         }
         return movableStones;
     }
@@ -57,7 +57,7 @@ public class Player {
         return lastStoneToWin.i - 1; // winning tile index
     }
 
-    private ArrayList<PlayStone> getStonesWinningInOrder(){
+    private ArrayList<PlayStone> getStonesWinningInOrder() {
         ArrayList<PlayStone> winningStones = new ArrayList<>();
         for (PlayStone stone : stones) {
             if (stone.isAWin) winningStones.add(stone);
