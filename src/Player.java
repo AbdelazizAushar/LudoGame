@@ -39,14 +39,14 @@ public class Player {
         }
     }
 
-    public Map<PlayStone, Integer> getMovableStones(State state, int dice) {
-        Map<PlayStone, Integer> movableStones = new HashMap<>();
+    public ArrayList<PlayStone> getMovableStones(State state, int dice) {
+        ArrayList<PlayStone> movableStones = new ArrayList<>();
         for (PlayStone stone : stones) {
             if (stone.isAWin) continue;
             if (stone.isOut && dice != 6) continue;
             if (getWinningTileIndex() - stone.i <= 6 && getWinningTileIndex() != stone.i + dice) continue;
             if (state.BlockFounded(dice, stone) == 0) continue;
-            movableStones.put(stone, state.BlockFounded(dice, stone));
+            movableStones.add(stone);
         }
         return movableStones;
     }
