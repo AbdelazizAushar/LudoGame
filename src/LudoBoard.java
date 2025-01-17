@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 public class LudoBoard {
-
-    private String[][] ludoBoard;
-    private static Map<PlayerColor, Map<Integer, Position>> stoneRoadOnBoardBaseOnColor;
-    private static Map<Integer, Position> blueRoadOnBoard;
-    private static Map<Integer, Position> greenRoadOnBoard;
-    private static Map<Integer, Position> yellowRoadOnBoard;
-    private static Map<Integer, Position> redRoadOnBoard;
-    private static Map<PlayerColor, List<Position>> playersHomePositions;
+    private final String[][] ludoBoard;
+    private static final Map<PlayerColor, Map<Integer, Position>> stoneRoadOnBoardBaseOnColor;
+    private static final Map<Integer, Position> blueRoadOnBoard;
+    private static final Map<Integer, Position> greenRoadOnBoard;
+    private static final Map<Integer, Position> yellowRoadOnBoard;
+    private static final Map<Integer, Position> redRoadOnBoard;
+    private static final Map<PlayerColor, List<Position>> playersHomePositions;
 
     static {
         blueRoadOnBoard = new HashMap<>();

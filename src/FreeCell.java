@@ -19,6 +19,7 @@ public class FreeCell extends Cells {
     void collide(PlayStone stone) {
         if (!listStones.isEmpty() && stone.color != listStones.get(0).color) {
             listStones.forEach(stonein -> stonein.i = -1);
+            listStones.forEach(stonein -> stonein.isOut = true);
             listStones.clear();
         }
         listStones.add(stone);
