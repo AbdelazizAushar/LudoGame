@@ -1,25 +1,28 @@
 import java.util.*;
 
 public class Player {
-    boolean isWin;
+    boolean winner;
     String playerName;
     PlayerColor playerColor;
     ArrayList<PlayStone> stones = new ArrayList<>();
 
     public Player(PlayerColor playerColor) {
-        this.playerName = "";
+        this.winner = false;
+        this.playerName = " ";
         this.playerColor = playerColor;
         initializePlayerStones();
     }
 
     public Player(String playerName, PlayerColor playerColor) {
+        this.winner = false;
         this.playerName = playerName;
         this.playerColor = playerColor;
+        initializePlayerStones();
     }
 
     // deep copy constructor
     public Player(Player player) {
-        this.isWin = player.isWin;
+        this.winner = player.winner;
         this.playerName = player.playerName;
         this.playerColor = player.playerColor;
         this.stones = deepCopyStones(player.stones);
@@ -35,7 +38,7 @@ public class Player {
 
     private void initializePlayerStones() {
         for (int i = 0; i < 4; i++) {
-            stones.add(new PlayStone(playerColor));
+            stones.add(new PlayStone(playerColor, i+1));
         }
     }
 
@@ -51,9 +54,9 @@ public class Player {
         return movableStones;
     }
 
-    private int getWinningTileIndex() {
+    public int getWinningTileIndex() {
         ArrayList<PlayStone> winningStones = getStonesWinningInOrder();
-        PlayStone lastStoneToWin = winningStones.getFirst(); // the most outside stone
+        PlayStone lastStoneToWin = winningStones.get(0); // the most outside stone
         return lastStoneToWin.i - 1; // winning tile index
     }
 

@@ -5,12 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 public class State {
-    Cells[][] grid; // Cells[57][4] -- [56 route + 1 goal][4 players]
+    Cells[][] grid; // [4][52]
     ArrayList<Player> players;
+    Player currentPlayer;
     boolean isFinished = false;
-    Map<String, Integer> intersection = new HashMap<>();
 
     public State(Cells[][] grid, ArrayList<Player> players) {
+        this.grid = grid;
+        this.players = players;
+        this.isFinished = false;
+    }
+
+    public State(Cells[][] grid, ArrayList<Player> players, Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
         this.grid = grid;
         this.players = players;
         this.isFinished = false;
@@ -20,6 +27,7 @@ public class State {
         this.grid = deepCopyGrid(state.grid);
         this.players = deepCopyPlayers(state.players);
         this.isFinished = state.isFinished;
+        this.currentPlayer = state.currentPlayer;
     }
 
     private ArrayList<Player> deepCopyPlayers(ArrayList<Player> players) {
@@ -40,27 +48,12 @@ public class State {
         return newGrid;
     }
 
-    Map<String, Integer> intersection(PlayStone stone) {
-        Map<String, Integer> intersection = new HashMap<>();
-
-        for (PlayerColor color : PlayerColor.values()) {
-            if (stone.color == color) intersection.put(color.name(), stone.i);
-
-            int colorIndex = color.getStartingPosition();
-            int offset = stone.color.getStartingPosition() - colorIndex;
-
-            int notKnownColorIndex = (stone.i + 12 * (offset < 0 ? (offset + 4) : offset)) % 48;
-            intersection.put(color.name(), notKnownColorIndex);
-        }
-
-        return intersection;
-    }
-
     Map<String, Integer> intersectionWithStep(PlayStone stone, int step) {
         Map<String, Integer> intersection = new HashMap<>();
 
         for (PlayerColor color : PlayerColor.values()) {
-            if (stone.color == color) continue;
+            if (stone.color == color)
+                continue;
             int colorIndex = color.getStartingPosition();
             int offset = stone.color.getStartingPosition() - colorIndex;
 
@@ -95,24 +88,71 @@ public class State {
         return step;
     }
 
-    @Override
-    public String toString() {
-
-        return " ";
+    public State move(Player player, PlayStone chosenStone, int dice) {
+        State currentState = new State(this);
+        int playerIndex = getPlayerIndex(player);
+        for (int i = 0; i < currentState.players.get(playerIndex).stones.size(); i++) {
+            if (currentState.players.get(playerIndex).stones.get(i).equals(chosenStone)) {
+                PlayStone currentStone = currentState.players.get(playerIndex).stones.get(i);
+                if (currentStone.i == -1) {
+                    currentStone.isOut = false;
+                    currentStone.i = 0;
+                    break;
+                } else {
+                    currentStone.i += dice;
+                    grid[playerIndex][currentStone.i].collide(currentStone);
+                    if (currentStone.i == currentState.players.get(
+                            playerIndex)
+                            .getWinningTileIndex())
+                        currentStone.isAWin = true;
+                    break;
+                }
+            }
+        }
+        return currentState;
     }
+
+    public static int getPlayerIndex(Player player) {
+        return switch (player.playerColor) {
+            case GREEN -> 0;
+            case YELLOW -> 1;
+            case RED -> 2;
+            case BLUE -> 3;
+            default -> -1;
+        };
+    }
+
 }
 
+// @Override
+// public String toString() {
+// return " ";
+// }
 
-//    List<Integer> cellsPosition = new ArrayList<>();
-//        for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
-//                Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
-//        cellsPosition.add(positions.get(stone.color.name()));
-//        }
-//        for (Integer listPosition : cellsPosition) {
-//        for (int i = 0; i < 4; i++) {
-//        if (grid[listPosition][i].listStones.size() >= 2) {
-//        return true;
-//        }
-//        }
-//        }
-//        return false;
+// Map<String, Integer> intersection(PlayStone stone) {
+// Map<String, Integer> intersection = new HashMap<>();
+// for (PlayerColor color : PlayerColor.values()) {
+// if (stone.color == color)
+// intersection.put(color.name(), stone.i);
+// int colorIndex = color.getStartingPosition();
+// int offset = stone.color.getStartingPosition() - colorIndex;
+// int notKnownColorIndex = (stone.i + 12 * (offset < 0 ? (offset + 4) :
+// offset)) % 48;
+// intersection.put(color.name(), notKnownColorIndex);
+// }
+// return intersection;
+// }
+
+// List<Integer> cellsPosition = new ArrayList<>();
+// for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
+// Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
+// cellsPosition.add(positions.get(stone.color.name()));
+// }
+// for (Integer listPosition : cellsPosition) {
+// for (int i = 0; i < 4; i++) {
+// if (grid[listPosition][i].listStones.size() >= 2) {
+// return true;
+// }
+// }
+// }
+// return false;

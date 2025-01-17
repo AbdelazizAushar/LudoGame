@@ -3,16 +3,19 @@ public class PlayStone {
     int i;
     boolean isOut;
     boolean isAWin;
+    int num;
 
-    public PlayStone(PlayerColor color) {
+    public PlayStone(PlayerColor color, int num) {
         this.color = color;
+        this.num = num;
         this.i = -1;
         this.isOut = true;
         this.isAWin = false;
     }
 
-    public PlayStone(PlayerColor color, int i, boolean isOut, boolean isAWin) {
+    public PlayStone(PlayerColor color, int num, int i, boolean isOut, boolean isAWin) {
         this.color = color;
+        this.num = num;
         this.i = i;
         this.isOut = isOut;
         this.isAWin = isAWin;
@@ -21,6 +24,7 @@ public class PlayStone {
     // deep copy constructor
     public PlayStone(PlayStone playStone) {
         this.color = playStone.color;
+        this.num = playStone.num;
         this.i = playStone.i;
         this.isOut = playStone.isOut;
         this.isAWin = playStone.isAWin;
