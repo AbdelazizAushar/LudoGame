@@ -47,18 +47,18 @@ public class Player {
         for (PlayStone stone : stones) {
             if (stone.isAWin) continue;
             if (stone.isOut && dice != 6) continue;
-            if (getWinningTileIndex() - stone.i <= 6 && getWinningTileIndex() != stone.i + dice) continue;
-            if (state.BlockFounded(dice, stone) == 0) continue;
+            // if (getWinningTileIndex() - stone.i <= 6 && getWinningTileIndex() != stone.i + dice) continue;
+            // if (state.BlockFounded(dice, stone) == 0) continue;
             movableStones.add(stone);
         }
         return movableStones;
     }
 
-    public int getWinningTileIndex() {
-        ArrayList<PlayStone> winningStones = getStonesWinningInOrder();
-        PlayStone lastStoneToWin = winningStones.get(0); // the most outside stone
-        return lastStoneToWin.i - 1; // winning tile index
-    }
+    // public int getWinningTileIndex() {
+    //     ArrayList<PlayStone> winningStones = getStonesWinningInOrder();
+    //     PlayStone lastStoneToWin = winningStones.getFirst(); // the most outside stone
+    //     return lastStoneToWin.i - 1; // winning tile index
+    // }
 
     private ArrayList<PlayStone> getStonesWinningInOrder() {
         ArrayList<PlayStone> winningStones = new ArrayList<>();
