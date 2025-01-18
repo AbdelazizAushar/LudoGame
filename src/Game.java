@@ -1,5 +1,6 @@
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,12 +10,24 @@ public class Game {
     ArrayList<Player> players;
     ArrayList<State> states;
 
+
+
     public Game(int playersNumber) {
         this.players = getInitialPlayers(playersNumber);
         Cells[][] initialGrid = getInitialGrid(playersNumber);
         states = new ArrayList<>();
         states.add(new State(initialGrid, players));
     }
+
+    public Game(int playersNumber, Integer... computerIndexes) {
+        this.players = getInitialPlayers(playersNumber);
+        createComputerPlayers(computerIndexes);
+        Cells[][] initialGrid = getInitialGrid(playersNumber);
+        states = new ArrayList<>();
+        states.add(new State(initialGrid, players));
+    }
+
+
 
     private Cells[][] getInitialGrid(int playersNumber) {
         Cells[][] initialGrid = new Cells[playersNumber][PlayerRoadMaker.roadLength];
@@ -30,9 +43,15 @@ public class Game {
         ArrayList<Player> initPlayers = new ArrayList<>();
         PlayerColor[] playerColors = PlayerColor.values();
         for (int i = 0; i < playersNumber; i++) {
-            initPlayers.add(new Player(playerColors[i]));
+            initPlayers.add(new Player(playerColors[i],false));
         }
+
         return initPlayers;
+    }
+    private void createComputerPlayers(Integer... computerIndexes){
+        for (Integer index: computerIndexes) {
+            players.get(index).isComputer = true;
+        }
     }
 
     int dice() {
@@ -76,7 +95,7 @@ public class Game {
                 break;
             else {
                 try {
-                    Thread.sleep(Duration.ofSeconds(1));
+                    Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     System.out.println(ex);
                 }
@@ -84,8 +103,10 @@ public class Game {
                 firstState.statePlayer = firstPlayer;
             }
         }
-        PlayStone stone = chooseAStone(firstState, firstPlayer, dice);
-        states.add(firstState.move(firstPlayer, stone, dice));
+        PlayStone chosenStone;
+        if(firstPlayer.isComputer) chosenStone= new ComputerDecision(firstState, firstPlayer, dice).getDecisionStone();
+        else  chosenStone = chooseAStone(firstState, firstPlayer, dice);
+        states.add(firstState.move(firstPlayer, chosenStone, dice));
         LudoBoard board = new LudoBoard(firstState.players);
         System.out.println(board);
     }
@@ -114,10 +135,12 @@ public class Game {
             int dice = dice();
             System.out.println(ConsoleColors.getColor(
                     currentPlayer.playerColor) + currentPlayer.playerColor + " : " + dice + ConsoleColors.RESET);
-            PlayStone stone = chooseAStone(lastState, currentPlayer, dice);
-            if (stone == null) {
+            PlayStone chosenStone;
+            if(currentPlayer.isComputer) chosenStone= new ComputerDecision(lastState, currentPlayer, dice).getDecisionStone();
+            else  chosenStone = chooseAStone(lastState, currentPlayer, dice);
+            if (chosenStone == null) {
             } else {
-                states.add(lastState.move(currentPlayer, stone, dice));
+                states.add(lastState.move(currentPlayer, chosenStone, dice));
             }
             board = new LudoBoard(states.get(states.size() - 1).players);
             System.out.println(board);
@@ -146,6 +169,8 @@ public class Game {
             return null;
         }
     }
+
+
 }
 
 // switch (state.currentPlayer.playerColor) {

@@ -61,6 +61,15 @@ public class State {
         return intersection;
     }
 
+    Map<String, Boolean> stonesIntersectedWith(PlayStone stone, int step){
+        Map<String, Boolean> intersected = new HashMap<>();
+        Map<String, Integer> intersections = intersectionWithStep(stone, step);
+        for (Map.Entry<String, Integer> intersection: intersections.entrySet()){
+            intersected.put(intersection.getKey(), intersection.getValue() == stone.i + step);
+        }
+        return intersected;
+    }
+
     int BlockFounded(int diceNumber, PlayStone stone) {
         List<Integer> cellsPosition = new ArrayList<>();
         int step = 0;

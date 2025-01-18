@@ -2,19 +2,22 @@ import java.util.*;
 
 public class Player {
     boolean winner;
+    boolean isComputer;
     String playerName;
     PlayerColor playerColor;
     ArrayList<PlayStone> stones = new ArrayList<>();
 
-    public Player(PlayerColor playerColor) {
+    public Player(PlayerColor playerColor, boolean isComputer) {
         this.winner = false;
+        this.isComputer = isComputer;
         this.playerName = " ";
         this.playerColor = playerColor;
         initializePlayerStones();
     }
 
-    public Player(String playerName, PlayerColor playerColor) {
+    public Player(String playerName, PlayerColor playerColor, boolean isComputer) {
         this.winner = false;
+        this.isComputer = isComputer;
         this.playerName = playerName;
         this.playerColor = playerColor;
         initializePlayerStones();
@@ -23,6 +26,7 @@ public class Player {
     // deep copy constructor
     public Player(Player player) {
         this.winner = player.winner;
+        this.isComputer = player.isComputer;
         this.playerName = player.playerName;
         this.playerColor = player.playerColor;
         this.stones = deepCopyStones(player.stones);
