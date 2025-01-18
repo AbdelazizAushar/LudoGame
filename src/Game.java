@@ -1,6 +1,8 @@
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,8 +11,6 @@ import java.util.Scanner;
 public class Game {
     ArrayList<Player> players;
     ArrayList<State> states;
-
-
 
     public Game(int playersNumber) {
         this.players = getInitialPlayers(playersNumber);
@@ -27,8 +27,6 @@ public class Game {
         states.add(new State(initialGrid, players));
     }
 
-
-
     private Cells[][] getInitialGrid(int playersNumber) {
         Cells[][] initialGrid = new Cells[playersNumber][PlayerRoadMaker.roadLength];
         for (int i = 0; i < playersNumber; i++) {
@@ -43,13 +41,14 @@ public class Game {
         ArrayList<Player> initPlayers = new ArrayList<>();
         PlayerColor[] playerColors = PlayerColor.values();
         for (int i = 0; i < playersNumber; i++) {
-            initPlayers.add(new Player(playerColors[i],false));
+            initPlayers.add(new Player(playerColors[i], false));
         }
 
         return initPlayers;
     }
-    private void createComputerPlayers(Integer... computerIndexes){
-        for (Integer index: computerIndexes) {
+
+    private void createComputerPlayers(Integer... computerIndexes) {
+        for (Integer index : computerIndexes) {
             players.get(index).isComputer = true;
         }
     }
@@ -63,23 +62,28 @@ public class Game {
         return false;
     }
 
-    Player firstPlayer() {
+    List<Integer> throwing() {
+        List<Integer> dices = new ArrayList<>();
         System.out.println(ConsoleColors.WHITE_BOLD_BRIGHT + "First throw :" + ConsoleColors.RESET);
-
-        System.out.print("Player 1 : ");
-        int dice1 = dice();
-        System.out.println(dice1);
-
-        System.out.print("Player 2 : ");
-        int dice2 = dice();
-        System.out.println(dice2);
-
+        for (int i = 0; i < players.size(); i++) {
+            int dice = dice();
+            System.out.println("Player " + players.get(i).playerColor + " : " + dice);
+            if (!dices.contains(dice))
+                dices.add(dice);
+        }
         System.out.println();
+        return dices;
+    }
 
-        if (dice1 > dice2)
-            return players.get(0);
-        else if (dice1 < dice2)
-            return players.get(1);
+    Player firstPlayer() {
+        List<Integer> dices = throwing();
+        while (dices.size() < players.size()) {
+            dices = throwing();
+        }
+        for (int i = 0; i < dices.size(); i++) {
+            if (Objects.equals(dices.get(i), Collections.max(dices)))
+                return players.get(i);
+        }
         return null;
     }
 
@@ -138,6 +142,11 @@ public class Game {
             } else {
                 states.add(lastState.move(currentPlayer, chosenStone, dice));
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                System.out.println(ex);
+            }
             board = new LudoBoard(states.get(states.size() - 1).players);
             System.out.println(board);
         }
@@ -170,7 +179,6 @@ public class Game {
             return null;
         }
     }
-
 
 }
 

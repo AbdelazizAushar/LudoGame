@@ -1,13 +1,11 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class ComputerDecision {
-    private State state;
-    private Player player;
-    private int dice;
-    private PlayStone decisionStone;
+    private final State state;
+    private final Player player;
+    private final int dice;
+    private final PlayStone decisionStone;
 
     public ComputerDecision(State state, Player player, int dice){
         this.state = state;
@@ -15,6 +13,7 @@ public class ComputerDecision {
         this.dice = dice;
         decisionStone = chooseAStone();
     }
+    
     private PlayStone chooseAStone(){
         int playerIndex = State.getPlayerIndex(player);
         ArrayList<PlayStone> movableStones = state.players.get(playerIndex).getMovableStones(state, dice);
@@ -29,6 +28,7 @@ public class ComputerDecision {
         }
         return null;
     }
+
     private int calculateStoneScore(PlayStone stone, State oldState, State newState) {
         int playerIndex = State.getPlayerIndex(player);
         PlayStone oldStone = oldState.players.get(playerIndex).stones.get(stone.num-1);
@@ -41,8 +41,5 @@ public class ComputerDecision {
     }
 
     public PlayStone getDecisionStone() {return decisionStone; }
-
-
-
 
 }
