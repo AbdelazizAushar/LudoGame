@@ -73,26 +73,44 @@ public class State {
         List<Integer> cellsPosition = new ArrayList<>();
         int step = 0;
 
+        System.out.println("Starting BlockFounded method");
+        System.out.println("diceNumber: " + diceNumber);
+        System.out.println("stone position: i = " + stone.i + ", color = " + stone.color.name());
+
         for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
             Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
-            cellsPosition.add(positions.get(stone.color.name()));
+            System.out.println(stone.color.name());
+            cellsPosition.addAll(positions.values());
+//            Integer position = positions.get(stone.color.name());
+//            System.out.println("Calculated position for step " + (i - stone.i) + ": " + position);
+//            cellsPosition.add(position);
         }
+        System.out.println("Cells Position List: " + cellsPosition);
+
         for (int i = 0; i < cellsPosition.size(); i += 3) {
             boolean groupValid = true;
+            System.out.println("Checking group starting at index " + i);
             for (int j = i; j < i + 3 && j < cellsPosition.size(); j++) {
-                for (Cells[] grid1 : grid) {
-                    if (grid1[j].listStones.size() >= 2) {
+                System.out.println("Checking cell at position: " + cellsPosition.get(j));
+                for (Cells[] gridRow : grid) {
+                    if (gridRow[j].listStones.size() >= 2) {
+                        System.out.println("Invalid group: Cell at gridRow[" + j + "] has " + gridRow[j].listStones.size() + " stones");
                         groupValid = false;
                         break;
                     }
                 }
             }
             if (groupValid) {
+                System.out.println("Group starting at index " + i + " is valid");
                 step++;
+            } else {
+                System.out.println("Group starting at index " + i + " is invalid");
             }
         }
+        System.out.println("Total valid steps: " + step);
         return step;
     }
+
 
     public State move(Player player, PlayStone chosenStone, int dice) {
         State currentState = new State(this);
