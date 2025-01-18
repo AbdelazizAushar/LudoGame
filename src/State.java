@@ -1,8 +1,5 @@
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class State {
     Cells[][] grid; // [4][52]
@@ -33,7 +30,7 @@ public class State {
     private ArrayList<Player> deepCopyPlayers(ArrayList<Player> players) {
         ArrayList<Player> newPlayers = new ArrayList<>();
         for (Player player : players) {
-            newPlayers.add(player);
+            newPlayers.add(new Player(player));
         }
         return newPlayers;
     }
@@ -133,6 +130,17 @@ public class State {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof State state)) return false;
+        return isFinished == state.isFinished && Objects.equals(players, state.players) && Objects.equals(statePlayer, state.statePlayer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(players, statePlayer, isFinished);
+    }
 }
 
 // @Override

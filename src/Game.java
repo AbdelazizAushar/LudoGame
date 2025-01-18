@@ -92,7 +92,7 @@ public class Game {
 
     Player switchPlayer(State state) {
         for (int i = 0; i < state.players.size(); i++) {
-            if (state.statePlayer.equals(state.players.get(i))) {
+            if (state.statePlayer.playerColor.equals(state.players.get(i).playerColor)) {
                 if (i == state.players.size() - 1) {
                     return state.players.get(0);
                 } else
@@ -119,7 +119,7 @@ public class Game {
             } else {
                 states.add(lastState.move(currentPlayer, stone, dice));
             }
-            board = new LudoBoard(lastState.players);
+            board = new LudoBoard(states.get(states.size() - 1).players);
             System.out.println(board);
         }
     }

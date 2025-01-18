@@ -38,7 +38,7 @@ public class Player {
 
     private void initializePlayerStones() {
         for (int i = 0; i < 4; i++) {
-            stones.add(new PlayStone(playerColor, i+1));
+            stones.add(new PlayStone(playerColor, i + 1));
         }
     }
 
@@ -47,18 +47,19 @@ public class Player {
         for (PlayStone stone : stones) {
             if (stone.isAWin) continue;
             if (stone.isOut && dice != 6) continue;
-            // if (getWinningTileIndex() - stone.i <= 6 && getWinningTileIndex() != stone.i + dice) continue;
-             if (state.BlockFounded(dice, stone) == 0) continue;
+            if (stone.i + dice >= 48 && getWinningTileIndex() != stone.i + dice) continue;
+            if (state.BlockFounded(dice, stone) == 0) continue;
             movableStones.add(stone);
         }
         return movableStones;
     }
 
-    // public int getWinningTileIndex() {
-    //     ArrayList<PlayStone> winningStones = getStonesWinningInOrder();
-    //     PlayStone lastStoneToWin = winningStones.getFirst(); // the most outside stone
-    //     return lastStoneToWin.i - 1; // winning tile index
-    // }
+    public int getWinningTileIndex() {
+        ArrayList<PlayStone> winningStones = getStonesWinningInOrder();
+        if(winningStones.isEmpty()) return 51;
+        PlayStone lastStoneToWin = winningStones.get(0); // the most outside stone
+        return lastStoneToWin.i - 1; // winning tile index
+    }
 
     private ArrayList<PlayStone> getStonesWinningInOrder() {
         ArrayList<PlayStone> winningStones = new ArrayList<>();
@@ -67,5 +68,17 @@ public class Player {
         }
         winningStones.sort(Comparator.comparingInt(stone -> stone.i));
         return winningStones;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player player)) return false;
+        return winner == player.winner && Objects.equals(playerName, player.playerName) && playerColor == player.playerColor && Objects.equals(stones, player.stones);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(winner, playerName, playerColor, stones);
     }
 }
