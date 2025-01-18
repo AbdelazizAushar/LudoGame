@@ -138,8 +138,12 @@ public class Game {
             System.out.println();
             Scanner input = new Scanner(System.in);
             int chosen = input.nextInt();
-            PlayStone stone = movableStones.get(chosen - 1);
-            return stone;
+            for (PlayStone movableStone : movableStones) {
+                if (movableStone.num == chosen) {
+                    return movableStone;
+                }
+            }
+            return null;
         }
     }
 }
