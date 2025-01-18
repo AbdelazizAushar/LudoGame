@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class PlayStone {
     PlayerColor color;
     int i;
@@ -40,4 +42,15 @@ public class PlayStone {
         return String.valueOf(number) + String.valueOf(result);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PlayStone playStone)) return false;
+        return i == playStone.i && isOut == playStone.isOut && isAWin == playStone.isAWin && num == playStone.num && color == playStone.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, i, isOut, isAWin, num);
+    }
 }
