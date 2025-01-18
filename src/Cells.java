@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Cells {
@@ -6,6 +7,7 @@ public abstract class Cells {
 
     public Cells(char name) {
         this.name = name;
+        this.listStones= new ArrayList<>();
     }
 
     public Cells(char name, List<PlayStone> listStones) {

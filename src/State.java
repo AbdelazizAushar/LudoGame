@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class State {
@@ -63,29 +64,36 @@ public class State {
         return intersection;
     }
 
-    // int BlockFounded(int diceNumber, PlayStone stone) {
-    //     List<Integer> cellsPosition = new ArrayList<>();
-    //     int step = 0;
-    //     for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
-    //         Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
-    //         cellsPosition.add(positions.get(stone.color.name()));
-    //     }
-    //     for (int i = 0; i < cellsPosition.size(); i += 3) {
-    //         boolean groupValid = true;
-    //         for (int j = i; j < i + 3 && j < cellsPosition.size(); j++) {
-    //             for (int k = 0; k < 4; k++) {
-    //                 if (grid[j][k].listStones.size() >= 2) {
-    //                     groupValid = false;
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //         if (groupValid) {
-    //             step++;
-    //         }
-    //     }
-    //     return step;
-    // }
+     int BlockFounded(int diceNumber, PlayStone stone) {
+
+         List<Integer> cellsPosition = new ArrayList<>();
+         int step = 0;
+
+         for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
+             Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
+             cellsPosition.add(positions.get(stone.color.name()));
+         }
+
+         for (int i = 0; i < cellsPosition.size(); i += 3) {
+
+             boolean groupValid = true;
+             for (int j = i; j < i + 3 && j < cellsPosition.size(); j++) {
+
+                 for (int k = 0; k <grid.length; k++) {
+
+                     if (grid[k][j].listStones.size() >= 2) {
+                         groupValid = false;
+                         break;
+                     }
+
+                 }
+             }
+             if (groupValid) {
+                 step++;
+             }
+         }
+         return step;
+     }
 
     public State move(Player player, PlayStone chosenStone, int dice) {
         State currentState = new State(this);
