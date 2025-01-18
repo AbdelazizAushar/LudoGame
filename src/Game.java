@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+@SuppressWarnings({ "ConvertToTryWithResources", "resource" })
+
 public class Game {
     ArrayList<Player> players;
     ArrayList<State> states;
@@ -78,8 +80,8 @@ public class Game {
                 } catch (InterruptedException ex) {
                     System.out.println(ex);
                 }
-                firstPlayer = swichPlayer(firstState);
-                firstState.currentPlayer = firstPlayer;
+                firstPlayer = switchPlayer(firstState);
+                firstState.statePlayer = firstPlayer;
             }
         }
         PlayStone stone = chooseAStone(firstState, firstPlayer, dice);
@@ -88,16 +90,16 @@ public class Game {
         System.out.println(board);
     }
 
-    Player swichPlayer(State state) {
-        return switch (state.currentPlayer.playerColor) {
-            // case GREEN -> state.players.get(1);
-            // case YELLOW -> state.players.get(2);
-            // case RED -> state.players.get(3);
-            // case BLUE -> state.players.get(0);
-            case GREEN -> state.players.get(1);
-            case YELLOW -> state.players.get(0);
-            default -> null;
-        };
+    Player switchPlayer(State state) {
+        for (int i = 0; i < state.players.size(); i++) {
+            if (state.statePlayer.equals(state.players.get(i))) {
+                if (i == state.players.size() - 1) {
+                    return state.players.get(0);
+                } else
+                    return state.players.get(i + 1);
+            }
+        }
+        return null;
     }
 
     public void play() {
@@ -107,8 +109,8 @@ public class Game {
         firstMove();
         while (!win()) {
             lastState = states.get(states.size() - 1);
-            currentPlayer = swichPlayer(lastState);
-            lastState.currentPlayer = currentPlayer;
+            currentPlayer = switchPlayer(lastState);
+            lastState.statePlayer = currentPlayer;
             int dice = dice();
             System.out.println(ConsoleColors.getColor(
                     currentPlayer.playerColor) + currentPlayer.playerColor + " : " + dice + ConsoleColors.RESET);
@@ -122,7 +124,6 @@ public class Game {
         }
     }
 
-    @SuppressWarnings({ "ConvertToTryWithResources", "resource" })
     private PlayStone chooseAStone(State currentState, Player player, int dice) {
         int playerIndex = State.getPlayerIndex(player);
         ArrayList<PlayStone> movableStones = currentState.players.get(playerIndex).getMovableStones(currentState, dice);
@@ -136,16 +137,17 @@ public class Game {
             }
             System.out.println();
             Scanner input = new Scanner(System.in);
-            int chosen = 0;
-            if (input.hasNextInt()) {
-                chosen = input.nextInt();
-            } else {
-                System.out.println("Invalid input");
-                input.next();
-            }
+            int chosen = input.nextInt();
             PlayStone stone = movableStones.get(chosen - 1);
             return stone;
         }
     }
-
 }
+
+// switch (state.currentPlayer.playerColor) {
+// case GREEN -> state.players.get(1);
+// case YELLOW -> state.players.get(2);
+// case RED -> state.players.get(3);
+// case BLUE -> state.players.get(0);
+// default -> null;
+// }
