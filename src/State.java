@@ -7,7 +7,7 @@ import java.util.Map;
 public class State {
     Cells[][] grid; // [4][52]
     ArrayList<Player> players;
-    Player currentPlayer;
+    Player statePlayer;
     boolean isFinished = false;
 
     public State(Cells[][] grid, ArrayList<Player> players) {
@@ -17,7 +17,7 @@ public class State {
     }
 
     public State(Cells[][] grid, ArrayList<Player> players, Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
+        this.statePlayer = currentPlayer;
         this.grid = grid;
         this.players = players;
         this.isFinished = false;
@@ -27,7 +27,7 @@ public class State {
         this.grid = deepCopyGrid(state.grid);
         this.players = deepCopyPlayers(state.players);
         this.isFinished = state.isFinished;
-        this.currentPlayer = state.currentPlayer;
+        this.statePlayer = state.statePlayer;
     }
 
     private ArrayList<Player> deepCopyPlayers(ArrayList<Player> players) {
@@ -64,36 +64,30 @@ public class State {
         return intersection;
     }
 
-     int BlockFounded(int diceNumber, PlayStone stone) {
+    int BlockFounded(int diceNumber, PlayStone stone) {
+        List<Integer> cellsPosition = new ArrayList<>();
+        int step = 0;
 
-         List<Integer> cellsPosition = new ArrayList<>();
-         int step = 0;
-
-         for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
-             Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
-             cellsPosition.add(positions.get(stone.color.name()));
-         }
-
-         for (int i = 0; i < cellsPosition.size(); i += 3) {
-
-             boolean groupValid = true;
-             for (int j = i; j < i + 3 && j < cellsPosition.size(); j++) {
-
-                 for (int k = 0; k <grid.length; k++) {
-
-                     if (grid[k][j].listStones.size() >= 2) {
-                         groupValid = false;
-                         break;
-                     }
-
-                 }
-             }
-             if (groupValid) {
-                 step++;
-             }
-         }
-         return step;
-     }
+        for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
+            Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
+            cellsPosition.add(positions.get(stone.color.name()));
+        }
+        for (int i = 0; i < cellsPosition.size(); i += 3) {
+            boolean groupValid = true;
+            for (int j = i; j < i + 3 && j < cellsPosition.size(); j++) {
+                for (Cells[] grid1 : grid) {
+                    if (grid1[j].listStones.size() >= 2) {
+                        groupValid = false;
+                        break;
+                    }
+                }
+            }
+            if (groupValid) {
+                step++;
+            }
+        }
+        return step;
+    }
 
     public State move(Player player, PlayStone chosenStone, int dice) {
         State currentState = new State(this);
@@ -108,8 +102,6 @@ public class State {
                 } else {
                     currentStone.i += dice;
                     // grid[playerIndex][currentStone.i].collide(currentStone);
-                    // if (currentStone.i == currentState.players.get(playerIndex).getWinningTileIndex())
-                    //     currentStone.isAWin = true;
                     break;
                 }
             }
@@ -125,6 +117,20 @@ public class State {
             case BLUE -> 3;
             default -> -1;
         };
+    }
+
+    ArrayList<State> nextStates(State currentState, int dice) {
+        ArrayList<State> possibleMoves = new ArrayList<>();
+        int playerIndex = getPlayerIndex(currentState.statePlayer);
+        ArrayList<PlayStone> movableStones = currentState.players.get(playerIndex).getMovableStones(currentState, dice);
+        if (movableStones.isEmpty()) {
+            return possibleMoves;
+        } else {
+            for (PlayStone playStone : movableStones) {
+                possibleMoves.add(currentState.move(currentState.statePlayer, playStone, dice));
+            }
+            return possibleMoves;
+        }
     }
 
 }
