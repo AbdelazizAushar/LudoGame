@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
-@SuppressWarnings({ "ConvertToTryWithResources", "resource" })
+@SuppressWarnings({"ConvertToTryWithResources", "resource"})
 
 public class Game {
     ArrayList<Player> players;
@@ -43,7 +43,6 @@ public class Game {
         for (int i = 0; i < playersNumber; i++) {
             initPlayers.add(new Player(playerColors[i], false));
         }
-
         return initPlayers;
     }
 
@@ -99,7 +98,7 @@ public class Game {
                 break;
             else {
                 try {
-                    Thread.sleep(Duration.ofMillis(1000));
+                    Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     System.out.println(ex);
                 }
@@ -107,11 +106,7 @@ public class Game {
                 firstState.statePlayer = firstPlayer;
             }
         }
-        PlayStone chosenStone;
-        if (firstPlayer.isComputer)
-            chosenStone = new ComputerDecision(firstState, firstPlayer, dice).getDecisionStone();
-        else
-            chosenStone = chooseAStone(firstState, firstPlayer, dice);
+        PlayStone chosenStone = chooseAStone(firstState, firstPlayer, dice);
         states.add(firstState.move(firstPlayer, chosenStone, dice));
         LudoBoard board = new LudoBoard(firstState.players);
         System.out.println(board);
@@ -141,17 +136,13 @@ public class Game {
             int dice = dice();
             System.out.println(ConsoleColors.getColor(
                     currentPlayer.playerColor) + currentPlayer.playerColor + " : " + dice + ConsoleColors.RESET);
-            PlayStone chosenStone;
-            if (currentPlayer.isComputer)
-                chosenStone = new ComputerDecision(lastState, currentPlayer, dice).getDecisionStone();
-            else
-                chosenStone = chooseAStone(lastState, currentPlayer, dice);
+            PlayStone chosenStone = chooseAStone(lastState, currentPlayer, dice);
             if (chosenStone == null) {
             } else {
                 states.add(lastState.move(currentPlayer, chosenStone, dice));
             }
             try {
-                Thread.sleep(Duration.ofMillis(1000));
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 System.out.println(ex);
             }
@@ -161,6 +152,11 @@ public class Game {
     }
 
     private PlayStone chooseAStone(State currentState, Player player, int dice) {
+        if (player.isComputer) return new ComputerDecision(currentState, player, dice).getDecisionStone();
+        else return chooseAStoneByPlayer(currentState, player, dice);
+    }
+
+    private PlayStone chooseAStoneByPlayer(State currentState, Player player, int dice) {
         int playerIndex = State.getPlayerIndex(player);
         ArrayList<PlayStone> movableStones = currentState.players.get(playerIndex).getMovableStones(currentState, dice);
         if (movableStones.isEmpty()) {
