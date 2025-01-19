@@ -11,6 +11,9 @@ import java.util.Scanner;
 public class Game {
     ArrayList<Player> players;
     ArrayList<State> states;
+    static int repeatedTurns = 0;
+    static boolean hasNewTurn = false;
+
 
     public Game(int playersNumber) {
         this.players = getInitialPlayers(playersNumber);
@@ -113,6 +116,7 @@ public class Game {
     }
 
     Player switchPlayer(State state) {
+        if(hasNewTurn) return state.statePlayer;
         for (int i = 0; i < state.players.size(); i++) {
             if (state.statePlayer.playerColor.equals(state.players.get(i).playerColor)) {
                 if (i == state.players.size() - 1) {
@@ -134,12 +138,21 @@ public class Game {
             currentPlayer = switchPlayer(lastState);
             lastState.statePlayer = currentPlayer;
             int dice = dice();
+            addTurn(dice);
+            if(repeatedTurns == 3) {
+                System.out.println("You cannot play 3 consecutive turns");
+                hasNewTurn = false;
+                repeatedTurns = 0;
+                continue;
+            }
             System.out.println(ConsoleColors.getColor(
                     currentPlayer.playerColor) + currentPlayer.playerColor + " : " + dice + ConsoleColors.RESET);
             PlayStone chosenStone = chooseAStone(lastState, currentPlayer, dice);
             if (chosenStone == null) {
             } else {
-                states.add(lastState.move(currentPlayer, chosenStone, dice));
+                State newState = lastState.move(currentPlayer, chosenStone, dice);
+                addTurn(State.getPlayerIndex(currentPlayer), chosenStone.i, lastState, newState);
+                states.add(newState);
             }
             try {
                 Thread.sleep(1000);
@@ -177,6 +190,22 @@ public class Game {
             }
             return null;
         }
+    }
+
+    private void addTurn(int player, int cell, State oldState, State newState){
+        if(cell == -1) return;
+        if(oldState.grid[player][cell].listStones.size() == 0) return;
+        hasNewTurn = oldState.grid[player][cell].listStones.size() >= newState.grid[player][cell].listStones.size();
+    }
+
+    private void addTurn(int dice){
+        if(dice != 6) {
+            repeatedTurns = 0;
+            hasNewTurn = false;
+            return;
+        };
+        repeatedTurns++;
+        hasNewTurn = true;
     }
 
 }

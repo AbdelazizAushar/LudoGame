@@ -106,7 +106,8 @@ public class State {
                     break;
                 } else {
                     currentStone.i += dice;
-                    // grid[playerIndex][currentStone.i].collide(currentStone);
+//                     grid[playerIndex][currentStone.i].collide(currentStone);
+//                     grid[playerIndex][currentStone.i];
                     break;
                 }
             }
