@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
-@SuppressWarnings({ "ConvertToTryWithResources", "resource" })
+@SuppressWarnings({"ConvertToTryWithResources", "resource"})
 
 public class Game {
     ArrayList<Player> players;
@@ -43,7 +43,6 @@ public class Game {
         for (int i = 0; i < playersNumber; i++) {
             initPlayers.add(new Player(playerColors[i], false));
         }
-
         return initPlayers;
     }
 
@@ -152,9 +151,9 @@ public class Game {
         }
     }
 
-    private PlayStone chooseAStone(State currentState, Player player, int dice){
-        if(player.isComputer) return new ComputerDecision(currentState, player, dice).getDecisionStone();
-        else return chooseAStone(currentState, player, dice);
+    private PlayStone chooseAStone(State currentState, Player player, int dice) {
+        if (player.isComputer) return new ComputerDecision(currentState, player, dice).getDecisionStone();
+        else return chooseAStoneByPlayer(currentState, player, dice);
     }
 
     private PlayStone chooseAStoneByPlayer(State currentState, Player player, int dice) {
