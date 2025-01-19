@@ -301,13 +301,24 @@ public class LudoBoard {
             if(currStone.isOut){
                 positionOnBoard = playersHomePositions.get(currStone.color).get(i);
             }
-            ludoBoard[positionOnBoard.x][positionOnBoard.y] = currStone.getStoneOnBoard(i+1);
+            String currOnBoard = ludoBoard[positionOnBoard.x][positionOnBoard.y];
+            if(checkIfStone(currOnBoard)){
+                ludoBoard[positionOnBoard.x][positionOnBoard.y] = 'w' + currStone.getStoneOnBoard().substring(1,2);
+            }
+            ludoBoard[positionOnBoard.x][positionOnBoard.y] = currStone.getStoneOnBoard();
         }
+    }
+
+    private boolean checkIfStone(String cellBoard) {
+        return checkIfDigits(cellBoard.substring(0,1));
+    }
+
+    private boolean checkIfDigits(String ch){
+        return ch.equals("1") || ch.equals("2") || ch.equals("3") || ch.equals("4");
     }
 
     @Override
     public String toString() {
-
         StringBuilder result = new StringBuilder();
         for (String[] row: ludoBoard){
             for (String cell: row) {

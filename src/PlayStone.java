@@ -32,14 +32,14 @@ public class PlayStone {
         this.isAWin = playStone.isAWin;
     }
 
-    public String getStoneOnBoard(int number) {
+    public String getStoneOnBoard() {
         char result = 'g';
         switch (color.ordinal()){
             case 1 -> result = 'y';
             case 2 -> result = 'r';
             case 3 -> result = 'b';
         }
-        return String.valueOf(number) + String.valueOf(result);
+        return String.valueOf(num) + String.valueOf(result);
     }
 
     @Override

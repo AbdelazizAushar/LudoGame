@@ -111,6 +111,10 @@ public class ConsoleColors {
             case "2g" -> ConsoleColors.GREEN + " 2 " + ConsoleColors.RESET;
             case "3g" -> ConsoleColors.GREEN + " 3 " + ConsoleColors.RESET;
             case "4g" -> ConsoleColors.GREEN + " 4 " + ConsoleColors.RESET;
+            case "wg" -> ConsoleColors.GREEN_BACKGROUND + "   " + ConsoleColors.RESET;
+            case "wr" -> ConsoleColors.RED_BACKGROUND + "   " + ConsoleColors.RESET;
+            case "wy" -> ConsoleColors.YELLOW_BACKGROUND + "   " + ConsoleColors.RESET;
+            case "wb" -> ConsoleColors.BLUE_BACKGROUND + "   " + ConsoleColors.RESET;
             default -> cell;
         };
     }
