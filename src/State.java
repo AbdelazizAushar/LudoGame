@@ -73,40 +73,30 @@ public class State {
         List<Integer> cellsPosition = new ArrayList<>();
         int step = 0;
 
-        System.out.println("Starting BlockFounded method");
-        System.out.println("diceNumber: " + diceNumber);
-        System.out.println("stone position: i = " + stone.i + ", color = " + stone.color.name());
 
         for (int i = stone.i + 1; i <= diceNumber + stone.i; i++) {
             Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
-            System.out.println(stone.color.name());
             cellsPosition.addAll(positions.values());
-
         }
-        System.out.println("Cells Position List: " + cellsPosition);
 
-        for (int i = 0; i < cellsPosition.size(); i += 3) {
+
+        for (int i = 0; i < cellsPosition.size() - 3; i += 3) {
             boolean groupValid = true;
-            System.out.println("Checking group starting at index " + i);
-            for (int j = i; j < i + 3 && j < cellsPosition.size(); j++) {
-                System.out.println("Checking cell at position: " + cellsPosition.get(j));
-                for (Cells[] gridRow : grid) {
-                    if (gridRow[j].listStones.size() >= 2) {
-                        System.out.println("Invalid group: Cell at gridRow[" + j + "] has " + gridRow[j].listStones.size() + " stones");
-                        groupValid = false;
-                        break;
-                    }
+            step = 0;
+
+            for (int j = i+1; j < i + 3 && j < cellsPosition.size(); j++) {
+                int position = cellsPosition.get(j);
+                System.out.println(grid[j%4][position].listStones.size());
+                if(grid[j%4][position].listStones.size() >= 2){
+                    groupValid = false;
+                    return step;
                 }
-            }
-            if (groupValid) {
-                System.out.println("Group starting at index " + i + " is valid");
                 step++;
-            } else {
-                System.out.println("Group starting at index " + i + " is invalid");
             }
+
         }
-        System.out.println("Total valid steps: " + step);
-        return step;
+
+        return diceNumber;
     }
 
 

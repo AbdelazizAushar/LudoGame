@@ -17,11 +17,18 @@ public class FreeCell extends Cells {
 
     @Override
     void collide(PlayStone stone) {
-        if (!listStones.isEmpty() && stone.color != listStones.get(0).color) {
-            listStones.forEach(stonein -> stonein.i = -1);
-            listStones.forEach(stonein -> stonein.isOut = true);
-            listStones.clear();
+        if (!listStones.isEmpty() && !stone.color.equals(listStones.get(0).color)) {
+            resetStones();
         }
         listStones.add(stone);
+
+
+    }
+    private void resetStones() {
+        for (PlayStone stone : listStones) {
+            stone.i = -1;
+            stone.isOut = true;
+        }
+        listStones.clear();
     }
 }
