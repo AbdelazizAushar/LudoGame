@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class FreeCell extends Cells {
@@ -12,7 +13,7 @@ public class FreeCell extends Cells {
 
     @Override
     public Cells copy() {
-        return new FreeCell(this.name, this.listStones);
+        return new FreeCell(this.name, this.deepCopyStones((ArrayList<PlayStone>) this.listStones));
     }
 
     @Override

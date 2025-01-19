@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class SafetyCell extends Cells {
@@ -11,7 +12,7 @@ public class SafetyCell extends Cells {
 
     @Override
     public Cells copy() {
-        return new SafetyCell(this.name, this.listStones);
+        return new SafetyCell(this.name, this.deepCopyStones((ArrayList<PlayStone>) this.listStones));
     }
 
     @Override
