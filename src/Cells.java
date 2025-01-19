@@ -23,4 +23,12 @@ public abstract class Cells {
     abstract public Cells copy();
 
     abstract void collide(PlayStone stone);
+
+    protected ArrayList<PlayStone> deepCopyStones(ArrayList<PlayStone> stones) {
+        ArrayList<PlayStone> newStones = new ArrayList<>();
+        for (PlayStone stone : stones) {
+            newStones.add(new PlayStone(stone));
+        }
+        return newStones;
+    }
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class GoalCell extends ColoredCell {
@@ -16,7 +17,7 @@ public class GoalCell extends ColoredCell {
 
     @Override
     public Cells copy() {
-        return new GoalCell(this.name, this.listStones);
+        return new GoalCell(this.name, this.deepCopyStones((ArrayList<PlayStone>) this.listStones));
     }
 
     @Override
