@@ -81,9 +81,7 @@ public class State {
             Map<String, Integer> positions = intersectionWithStep(stone, diceNumber);
             System.out.println(stone.color.name());
             cellsPosition.addAll(positions.values());
-//            Integer position = positions.get(stone.color.name());
-//            System.out.println("Calculated position for step " + (i - stone.i) + ": " + position);
-//            cellsPosition.add(position);
+
         }
         System.out.println("Cells Position List: " + cellsPosition);
 
