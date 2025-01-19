@@ -31,10 +31,10 @@ public class Game {
     }
 
     private Cells[][] getInitialGrid(int playersNumber) {
-        Cells[][] initialGrid = new Cells[playersNumber][PlayerRoadMaker.roadLength];
-        for (int i = 0; i < playersNumber; i++) {
-            Player currPlayer = players.get(i);
-            PlayerRoadMaker currPlayerRoad = new PlayerRoadMaker(currPlayer.playerColor);
+        Cells[][] initialGrid = new Cells[4][PlayerRoadMaker.roadLength];
+        PlayerColor[] playerColors = PlayerColor.values();
+        for (int i = 0; i < playerColors.length; i++) {
+            PlayerRoadMaker currPlayerRoad = new PlayerRoadMaker(playerColors[i]);
             initialGrid[i] = currPlayerRoad.getPlayerRoad();
         }
         return initialGrid;
@@ -81,15 +81,15 @@ public class Game {
     }
 
     Player firstPlayer() {
-        List<Integer> dices = throwing();
-        while (dices.size() < players.size()) {
-            dices = throwing();
-        }
-        for (int i = 0; i < dices.size(); i++) {
-            if (Objects.equals(dices.get(i), Collections.max(dices)))
-                return players.get(i);
-        }
-        return null;
+//        List<Integer> dices = throwing();
+//        while (dices.size() < players.size()) {
+//            dices = throwing();
+//        }
+//        for (int i = 0; i < dices.size(); i++) {
+//            if (Objects.equals(dices.get(i), Collections.max(dices)))
+//                return players.get(i);
+//        }
+        return players.get(1);
     }
 
     void firstMove() {
@@ -140,7 +140,10 @@ public class Game {
             lastState = states.get(states.size() - 1);
             currentPlayer = switchPlayer(lastState);
             lastState.statePlayer = currentPlayer;
-            int dice = dice();
+            Scanner input = new Scanner(System.in);
+            System.out.println(ConsoleColors.getColor(
+                    currentPlayer.playerColor) + "Enter Dice Number: " + ConsoleColors.RESET);
+            int dice = input.nextInt();
             addTurn(dice);
             if(repeatedTurns == 3) {
                 System.out.println("You cannot play 3 consecutive turns");

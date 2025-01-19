@@ -305,7 +305,7 @@ public class LudoBoard {
             if(checkIfStone(currOnBoard)){
                 ludoBoard[positionOnBoard.x][positionOnBoard.y] = 'w' + currStone.getStoneOnBoard().substring(1,2);
             }
-            ludoBoard[positionOnBoard.x][positionOnBoard.y] = currStone.getStoneOnBoard();
+            else ludoBoard[positionOnBoard.x][positionOnBoard.y] = currStone.getStoneOnBoard();
         }
     }
 
