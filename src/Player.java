@@ -53,7 +53,7 @@ public class Player {
             if (stone.isOut && dice != 6) continue;
             if (stone.i + dice >= 48 && getWinningTileIndex() != stone.i + dice) continue;
             if (state.BlockFounded(dice, stone) == 0) continue;
-            System.out.println("block : "+ state.BlockFounded(dice, stone));
+            System.out.println("block : " + state.BlockFounded(dice, stone));
             movableStones.add(stone);
         }
         return movableStones;
@@ -61,7 +61,7 @@ public class Player {
 
     public int getWinningTileIndex() {
         ArrayList<PlayStone> winningStones = getStonesWinningInOrder();
-        if(winningStones.isEmpty()) return 51;
+        if (winningStones.isEmpty()) return 51;
         PlayStone lastStoneToWin = winningStones.get(0); // the most outside stone
         return lastStoneToWin.i - 1; // winning tile index
     }
